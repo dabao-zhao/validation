@@ -37,7 +37,7 @@ func RuneLength(min, max int) LengthRule {
 }
 
 func (r LengthRule) Validate(key, value interface{}) error {
-	if r.max < r.min {
+	if r.max <= r.min {
 		return errors.New("the length max must be more than min")
 	}
 
