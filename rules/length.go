@@ -1,19 +1,20 @@
-package validation
+package rules
 
 import (
 	"errors"
+	"github.com/dabao-zhao/validation"
 	"unicode/utf8"
 )
 
 var (
-	ErrLength = NewError("the {{.field}} field length must be between {{.min}} and {{.max}}")
+	ErrLength = validation.NewError("the {{.field}} field length must be between {{.min}} and {{.max}}")
 )
 
 type LengthRule struct {
 	min, max int
 	rune     bool
 
-	err Error
+	err validation.Error
 }
 
 // Length 长度验证
@@ -40,8 +41,8 @@ func (r LengthRule) Validate(key, value interface{}) error {
 		return errors.New("the length max must be more than min")
 	}
 
-	v, isNil := Indirect(value)
-	if isNil || IsEmpty(v) {
+	v, isNil := validation.Indirect(value)
+	if isNil || validation.IsEmpty(v) {
 		return nil
 	}
 
@@ -57,7 +58,7 @@ func (r LengthRule) Validate(key, value interface{}) error {
 		}
 		l = utf8.RuneCountInString(s)
 	} else {
-		if l, err = LengthOfValue(v); err != nil {
+		if l, err = validation.LengthOfValue(v); err != nil {
 			return err
 		}
 	}

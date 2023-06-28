@@ -1,11 +1,13 @@
-package validation
+package rules
+
+import "github.com/dabao-zhao/validation"
 
 var (
-	ErrRequired = NewError("the {{.field}} field is required.")
+	ErrRequired = validation.NewError("the {{.field}} field is required.")
 )
 
 type RequiredRule struct {
-	err Error
+	err validation.Error
 }
 
 // Required 验证非空.
@@ -14,8 +16,8 @@ var Required = RequiredRule{
 }
 
 func (r RequiredRule) Validate(key, value interface{}) error {
-	v, isNil := Indirect(value)
-	if isNil || IsEmpty(v) {
+	v, isNil := validation.Indirect(value)
+	if isNil || validation.IsEmpty(v) {
 		return r.err.Parse(map[string]interface{}{"field": key})
 	}
 	return nil

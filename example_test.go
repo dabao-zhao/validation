@@ -2,6 +2,7 @@ package validation_test
 
 import (
 	"fmt"
+	"github.com/dabao-zhao/validation/rules"
 
 	"github.com/dabao-zhao/validation"
 )
@@ -32,9 +33,9 @@ func ExampleValidation_ValidateStruct() {
 		},
 	}
 	valid := validation.Make(&c,
-		validation.Field(&c.Address, validation.Required),
-		validation.Field(&c.Address.City, validation.Required, validation.Length(20, 100)),
-		validation.Field(&c.Address.Street, validation.Required, validation.RuneLength(20, 1000)),
+		validation.Field(&c.Address, rules.Required),
+		validation.Field(&c.Address.City, rules.Required, rules.Length(20, 100)),
+		validation.Field(&c.Address.Street, rules.Required, rules.RuneLength(20, 1000)),
 	)
 
 	err := valid.Validate()
@@ -56,8 +57,8 @@ func ExampleValidation_ValidateMap() {
 		},
 	}
 	valid := validation.Make(&c,
-		validation.Field("address", validation.Required),
-		validation.Field("address.city", validation.Required, validation.Length(20, 100)),
+		validation.Field("address", rules.Required),
+		validation.Field("address.city", rules.Required, rules.Length(20, 100)),
 	)
 
 	err := valid.Validate()
