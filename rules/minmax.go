@@ -51,14 +51,17 @@ func (r ThresholdRule) Validate(key, value interface{}) error {
 		return nil
 	}
 	v := reflect.ValueOf(value)
-	rv := reflect.ValueOf(r.threshold)
 	switch v.Kind() {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		v, err := util.ToInt(value)
 		if err != nil {
 			return err
 		}
-		if r.compareInt(rv.Int(), v) {
+		threshold, err := util.ToInt(r.threshold)
+		if err != nil {
+			return err
+		}
+		if r.compareInt(threshold, v) {
 			return nil
 		}
 	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
@@ -66,7 +69,11 @@ func (r ThresholdRule) Validate(key, value interface{}) error {
 		if err != nil {
 			return err
 		}
-		if r.compareUint(rv.Uint(), v) {
+		threshold, err := util.ToUint(r.threshold)
+		if err != nil {
+			return err
+		}
+		if r.compareUint(threshold, v) {
 			return nil
 		}
 	case reflect.Float32, reflect.Float64:
@@ -74,7 +81,11 @@ func (r ThresholdRule) Validate(key, value interface{}) error {
 		if err != nil {
 			return err
 		}
-		if r.compareFloat(rv.Float(), v) {
+		threshold, err := util.ToFloat(r.threshold)
+		if err != nil {
+			return err
+		}
+		if r.compareFloat(threshold, v) {
 			return nil
 		}
 	case reflect.String, reflect.Slice, reflect.Map, reflect.Array:
@@ -91,7 +102,11 @@ func (r ThresholdRule) Validate(key, value interface{}) error {
 				r.err = ErrItemsMin
 			}
 		}
-		if r.compareStringSliceMapArray(rv.Int(), int64(v.Len())) {
+		threshold, err := util.ToInt(r.threshold)
+		if err != nil {
+			return err
+		}
+		if r.compareStringSliceMapArray(threshold, int64(v.Len())) {
 			return nil
 		}
 	}
