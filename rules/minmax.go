@@ -8,19 +8,19 @@ import (
 )
 
 var (
-	ErrNumericGreaterEqualThanRequired = validation.NewError("the {{.field}} field must not be greater than or equal to {{.threshold}}.")
-	ErrNumericLessEqualThanRequired    = validation.NewError("the {{.field}} field must not be less than or equal to {{.threshold}}.")
+	ErrNumericMax = validation.NewError("the {{.field}} field must be less than or equal to {{.threshold}}.")
+	ErrNumericMin = validation.NewError("the {{.field}} field must be greeter than or equal to {{.threshold}}.")
 
-	ErrStringGreaterEqualThanRequired = validation.NewError("the {{.field}} field must not be greater than or equal to {{.threshold}} characters.")
-	ErrStringLessEqualThanRequired    = validation.NewError("the {{.field}} field must not be less than or equal to {{.threshold}} characters.")
+	ErrStringMax = validation.NewError("the {{.field}} field must be less than or equal to {{.threshold}} characters.")
+	ErrStringMin = validation.NewError("the {{.field}} field must be greeter than or equal to {{.threshold}} characters.")
 
-	ErrItemsGreaterEqualThanRequired = validation.NewError("the {{.field}} field must not be greater than or equal to {{.threshold}} items.")
-	ErrItemsLessEqualThanRequired    = validation.NewError("the {{.field}} field must not be less than or equal to {{.threshold}} items.")
+	ErrItemsMax = validation.NewError("the {{.field}} field must be less than or equal to {{.threshold}} items.")
+	ErrItemsMin = validation.NewError("the {{.field}} field must be greeter than or equal to {{.threshold}} items.")
 )
 
 const (
-	greaterEqualThan = iota
-	lessEqualThan
+	maxOp = iota
+	minOp
 )
 
 type ThresholdRule struct {
@@ -32,16 +32,16 @@ type ThresholdRule struct {
 func Min(min interface{}) ThresholdRule {
 	return ThresholdRule{
 		threshold: min,
-		operator:  greaterEqualThan,
-		err:       ErrNumericLessEqualThanRequired,
+		operator:  minOp,
+		err:       ErrNumericMin,
 	}
 }
 
 func Max(max interface{}) ThresholdRule {
 	return ThresholdRule{
 		threshold: max,
-		operator:  lessEqualThan,
-		err:       ErrNumericGreaterEqualThanRequired,
+		operator:  maxOp,
+		err:       ErrNumericMax,
 	}
 }
 
@@ -78,17 +78,17 @@ func (r ThresholdRule) Validate(key, value interface{}) error {
 			return nil
 		}
 	case reflect.String, reflect.Slice, reflect.Map, reflect.Array:
-		if r.operator == greaterEqualThan {
+		if r.operator == maxOp {
 			if v.Kind() == reflect.String {
-				r.err = ErrStringGreaterEqualThanRequired
+				r.err = ErrStringMax
 			} else {
-				r.err = ErrItemsGreaterEqualThanRequired
+				r.err = ErrItemsMax
 			}
 		} else {
 			if v.Kind() == reflect.String {
-				r.err = ErrStringLessEqualThanRequired
+				r.err = ErrStringMin
 			} else {
-				r.err = ErrItemsLessEqualThanRequired
+				r.err = ErrItemsMin
 			}
 		}
 		if r.compareStringSliceMapArray(rv.Int(), int64(v.Len())) {
@@ -100,7 +100,7 @@ func (r ThresholdRule) Validate(key, value interface{}) error {
 
 func (r ThresholdRule) compareInt(threshold, value int64) bool {
 	switch r.operator {
-	case greaterEqualThan:
+	case minOp:
 		return value >= threshold
 	default:
 		return value <= threshold
@@ -109,7 +109,7 @@ func (r ThresholdRule) compareInt(threshold, value int64) bool {
 
 func (r ThresholdRule) compareUint(threshold, value uint64) bool {
 	switch r.operator {
-	case greaterEqualThan:
+	case minOp:
 		return value >= threshold
 	default:
 		return value <= threshold
@@ -118,7 +118,7 @@ func (r ThresholdRule) compareUint(threshold, value uint64) bool {
 
 func (r ThresholdRule) compareFloat(threshold, value float64) bool {
 	switch r.operator {
-	case greaterEqualThan:
+	case minOp:
 		return value >= threshold
 	default:
 		return value <= threshold
@@ -127,7 +127,7 @@ func (r ThresholdRule) compareFloat(threshold, value float64) bool {
 
 func (r ThresholdRule) compareStringSliceMapArray(threshold, l int64) bool {
 	switch r.operator {
-	case greaterEqualThan:
+	case minOp:
 		return l >= threshold
 	default:
 		return l <= threshold
