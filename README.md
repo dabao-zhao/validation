@@ -45,3 +45,7 @@ valid := validation.Make(&c,
 
 err := valid.Validate()
 ```
+
+### 灵感来源于
+
+[ozzo-validation](github.com/go-ozzo/ozzo-validation/)，同时也使用了该库的很多方法
