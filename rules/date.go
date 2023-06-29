@@ -31,12 +31,16 @@ type DateRule struct {
 	layout string
 }
 
+// Date 验证字段必须是 time.parse 可解析的有效日期
 var Date = DateRule{
 	err:    ErrDate,
 	typ:    date,
 	layout: layout,
 }
 
+// DateBefore 验证字段必须是给定日期之前的日期
+// 给定日期支持 time 和 string
+// 若为 string 会根据 layout 格式进行转换
 func DateBefore(t time.Time) DateRule {
 	return DateRule{
 		time:   t,
@@ -46,6 +50,9 @@ func DateBefore(t time.Time) DateRule {
 	}
 }
 
+// DateAfter 验证字段必须是给定日期之后的日期
+// 给定日期支持 time 和 string
+// 若为 string 会根据 layout 格式进行转换
 func DateAfter(t time.Time) DateRule {
 	return DateRule{
 		time:   t,
@@ -55,6 +62,9 @@ func DateAfter(t time.Time) DateRule {
 	}
 }
 
+// DateEqual 验证字段必须等于给定日期
+// 给定日期支持 time 和 string
+// 若为 string 会根据 layout 格式进行转换
 func DateEqual(t time.Time) DateRule {
 	return DateRule{
 		time:   t,
