@@ -42,7 +42,7 @@ func ExampleValidation_ValidateStruct() {
 	fmt.Println(err)
 
 	// Output:
-	// ["the address.City field length must be between 20 and 100","the address.Street field length must be between 20 and 1000"]
+	// ["the address.City field length must be between 20 and 100.","the address.Street field length must be between 20 and 1000."]
 }
 
 func ExampleValidation_ValidateMap() {
@@ -65,5 +65,5 @@ func ExampleValidation_ValidateMap() {
 	fmt.Println(err)
 
 	// Output:
-	// ["the address.city field length must be between 20 and 100"]
+	// ["the address.city field length must be between 20 and 100."]
 }

@@ -1,5 +1,12 @@
 ## validation
 
+
+### 安装
+```
+go get github.com/dabao-zhao/validation@latest
+```
+
+### 使用
 ```go
 c := Customer{
     Name:  "dabao",
