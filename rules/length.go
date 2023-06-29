@@ -3,6 +3,7 @@ package rules
 import (
 	"errors"
 	"github.com/dabao-zhao/validation"
+	"github.com/dabao-zhao/validation/util"
 	"unicode/utf8"
 )
 
@@ -41,8 +42,8 @@ func (r LengthRule) Validate(key, value interface{}) error {
 		return errors.New("the length max must be more than min")
 	}
 
-	v, isNil := validation.Indirect(value)
-	if isNil || validation.IsEmpty(v) {
+	v, isNil := util.Indirect(value)
+	if isNil || util.IsEmpty(v) {
 		return nil
 	}
 
@@ -58,7 +59,7 @@ func (r LengthRule) Validate(key, value interface{}) error {
 		}
 		l = utf8.RuneCountInString(s)
 	} else {
-		if l, err = validation.LengthOfValue(v); err != nil {
+		if l, err = util.LengthOfValue(v); err != nil {
 			return err
 		}
 	}

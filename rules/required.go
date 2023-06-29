@@ -1,6 +1,9 @@
 package rules
 
-import "github.com/dabao-zhao/validation"
+import (
+	"github.com/dabao-zhao/validation"
+	"github.com/dabao-zhao/validation/util"
+)
 
 var (
 	ErrRequired = validation.NewError("the {{.field}} field is required.")
@@ -16,8 +19,8 @@ var Required = RequiredRule{
 }
 
 func (r RequiredRule) Validate(key, value interface{}) error {
-	v, isNil := validation.Indirect(value)
-	if isNil || validation.IsEmpty(v) {
+	v, isNil := util.Indirect(value)
+	if isNil || util.IsEmpty(v) {
 		return r.err.Parse(map[string]interface{}{"field": key})
 	}
 	return nil

@@ -2,6 +2,7 @@ package rules
 
 import (
 	"errors"
+	"github.com/dabao-zhao/validation/util"
 	"reflect"
 	"time"
 
@@ -75,8 +76,8 @@ func DateEqual(t time.Time) DateRule {
 }
 
 func (r DateRule) Validate(key, value interface{}) error {
-	value, isNil := validation.Indirect(value)
-	if isNil || validation.IsEmpty(value) {
+	value, isNil := util.Indirect(value)
+	if isNil || util.IsEmpty(value) {
 		return nil
 	}
 	var (
