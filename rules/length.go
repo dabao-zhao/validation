@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	ErrLength = validation.NewError("the {{.field}} field length must be between {{.min}} and {{.max}}")
+	ErrLength = validation.NewError("the {{.field}} field length must be between {{.min}} and {{.max}}.")
 )
 
 type LengthRule struct {
