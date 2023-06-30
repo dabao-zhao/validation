@@ -1,44 +1,19 @@
 package validation
 
 import (
-	"context"
 	"errors"
 	"reflect"
 	"sync"
 )
 
 type (
-	// Validatable is the interface indicating the type implementing it supports data validation.
 	Validatable interface {
-		// Validate validates the data and returns an error if validation fails.
 		Validate() error
 	}
 
-	// ValidatableWithContext is the interface indicating the type implementing it supports context-aware data validation.
-	ValidatableWithContext interface {
-		// ValidateWithContext validates the data with the given context and returns an error if validation fails.
-		ValidateWithContext(ctx context.Context) error
-	}
-
-	// Rule represents a validation rule.
 	Rule interface {
-		// Validate validates a value and returns a value if validation fails.
 		Validate(key, value interface{}) error
 	}
-
-	// RuleWithContext represents a context-aware validation rule.
-	RuleWithContext interface {
-		// ValidateWithContext validates a value and returns a value if validation fails.
-		ValidateWithContext(ctx context.Context, value interface{}) error
-	}
-
-	// RuleFunc represents a validator function.
-	// You may wrap it as a Rule by calling By().
-	RuleFunc func(key, value interface{}) error
-
-	// RuleWithContextFunc represents a validator function that is context-aware.
-	// You may wrap it as a Rule by calling WithContext().
-	RuleWithContextFunc func(ctx context.Context, value interface{}) error
 
 	Validation struct {
 		fieldTag           string
