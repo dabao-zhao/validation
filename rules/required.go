@@ -13,7 +13,7 @@ type RequiredRule struct {
 	err validation.Error
 }
 
-// Required 验证非空.
+// Required 验证非空
 var Required = RequiredRule{
 	err: ErrRequired,
 }
