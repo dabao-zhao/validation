@@ -10,36 +10,36 @@ import (
 )
 
 var (
-	ErrUrl = validation.NewError("the {{.field}} field must be a valid URL.")
+	ErrEmail = validation.NewError("the {{.field}} field must be a valid email.")
 )
 
-type UrlRule struct {
+type EmailRule struct {
 	err validation.Error
 }
 
-// URL 验证字段必须为有效的 URL
-var URL = UrlRule{
-	err: ErrUrl,
+// Email 验证字段必须为有效的 Email
+var Email = EmailRule{
+	err: ErrEmail,
 }
 
-func (r UrlRule) Validate(key, value interface{}) error {
+func (r EmailRule) Validate(key, value interface{}) error {
 	v, isNil := util.Indirect(value)
 	if isNil || util.IsEmpty(v) {
 		return nil
 	}
 	if reflect.TypeOf(value).Kind() != reflect.String {
-		return errors.New("the URL rule requires a type of string")
+		return errors.New("the Email rule requires a type of string")
 	}
-	if !govalidator.IsURL(v.(string)) {
+	if !govalidator.IsEmail(v.(string)) {
 		return r.err.Parse(map[string]interface{}{"field": key})
 	}
 
 	return nil
 }
 
-func (r UrlRule) Error(message string) UrlRule {
+func (r EmailRule) Error(message string) EmailRule {
 	if r.err == nil {
-		r.err = ErrUrl
+		r.err = ErrEmail
 	}
 	r.err = r.err.SetMessage(message)
 	return r
