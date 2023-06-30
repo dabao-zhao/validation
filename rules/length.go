@@ -45,7 +45,7 @@ func (r LengthRule) Validate(key, value interface{}) error {
 
 	v, isNil := util.Indirect(value)
 	if isNil || util.IsEmpty(v) {
-		return nil
+		return r.err.Parse(map[string]interface{}{"field": key, "max": r.max, "min": r.min})
 	}
 
 	var (
