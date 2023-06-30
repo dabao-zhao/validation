@@ -47,7 +47,7 @@ func TestRuneLength(t *testing.T) {
 		err      string
 	}{
 		{"t1", 2, 4, "abc", ""},
-		{"t2", 2, 4, "", ""},
+		{"t2", 2, 4, "", "the fortest field length must be between 2 and 4."},
 		{"t3", 2, 4, "abcdf", "the fortest field length must be between 2 and 4."},
 		{"t4", 0, 4, "ab", ""},
 		{"t5", 0, 4, "abcde", "the fortest field length must be between 0 and 4."},
@@ -56,7 +56,7 @@ func TestRuneLength(t *testing.T) {
 		{"t6", 2, 2, "ab", "the length max must be more than min"},
 		{"t9", 2, 10, 123, "the RuneLength rule requires a type of string"},
 		{"t10", 2, 4, sql.NullString{String: "abc", Valid: true}, ""},
-		{"t11", 2, 4, sql.NullString{String: "", Valid: true}, ""},
+		{"t11", 2, 4, sql.NullString{String: "", Valid: true}, "the fortest field length must be between 2 and 4."},
 		{"t12", 2, 4, &sql.NullString{String: "abc", Valid: true}, ""},
 	}
 
