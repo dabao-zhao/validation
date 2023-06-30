@@ -73,9 +73,6 @@ func (r LengthRule) Validate(key, value interface{}) error {
 }
 
 func (r LengthRule) Error(message string) LengthRule {
-	if r.err == nil {
-		r.err = ErrLength
-	}
 	r.err = r.err.SetMessage(message)
 	return r
 }

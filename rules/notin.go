@@ -41,9 +41,6 @@ func (r NotInRule) Validate(key, value interface{}) error {
 }
 
 func (r NotInRule) Error(message string) NotInRule {
-	if r.err == nil {
-		r.err = ErrNotIn
-	}
 	r.err = r.err.SetMessage(message)
 	return r
 }

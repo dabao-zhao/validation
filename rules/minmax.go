@@ -148,3 +148,8 @@ func (r ThresholdRule) compareStringSliceMapArray(threshold, l int64) bool {
 		return l <= threshold
 	}
 }
+
+func (r ThresholdRule) Error(message string) ThresholdRule {
+	r.err = r.err.SetMessage(message)
+	return r
+}

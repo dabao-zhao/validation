@@ -132,3 +132,8 @@ func (r DateRule) SetLayout(layout string) DateRule {
 	r.layout = layout
 	return r
 }
+
+func (r DateRule) Error(message string) DateRule {
+	r.err = r.err.SetMessage(message)
+	return r
+}

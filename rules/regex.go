@@ -41,9 +41,6 @@ func (r RegexRule) Validate(key, value interface{}) error {
 }
 
 func (r RegexRule) Error(message string) RegexRule {
-	if r.err == nil {
-		r.err = ErrRegex
-	}
 	r.err = r.err.SetMessage(message)
 	return r
 }
