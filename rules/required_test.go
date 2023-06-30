@@ -28,7 +28,11 @@ func TestRequired(t *testing.T) {
 	for _, test := range tests {
 		r := Required
 		err := r.Validate("fortest", test.value)
-		assertError(t, test.err, err, test.tag)
+		if test.err == "" {
+			assert.NoError(t, err, test.tag)
+		} else {
+			assert.EqualError(t, err, test.err, test.tag)
+		}
 	}
 }
 
@@ -39,12 +43,4 @@ func TestRequiredRule_Error(t *testing.T) {
 
 	err := r.Validate("fortest", "")
 	assert.EqualError(t, err, "fortest 不能为空")
-}
-
-func assertError(t *testing.T, expected string, err error, tag string) {
-	if expected == "" {
-		assert.NoError(t, err, tag)
-	} else {
-		assert.EqualError(t, err, expected, tag)
-	}
 }

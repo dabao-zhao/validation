@@ -30,7 +30,11 @@ func TestLength(t *testing.T) {
 	for _, test := range tests {
 		r := Length(test.min, test.max)
 		err := r.Validate("fortest", test.value)
-		assertError(t, test.err, err, test.tag)
+		if test.err == "" {
+			assert.NoError(t, err, test.tag)
+		} else {
+			assert.EqualError(t, err, test.err, test.tag)
+		}
 	}
 }
 
@@ -58,7 +62,11 @@ func TestRuneLength(t *testing.T) {
 	for _, test := range tests {
 		r := RuneLength(test.min, test.max)
 		err := r.Validate("fortest", test.value)
-		assertError(t, test.err, err, test.tag)
+		if test.err == "" {
+			assert.NoError(t, err, test.tag)
+		} else {
+			assert.EqualError(t, err, test.err, test.tag)
+		}
 	}
 }
 
