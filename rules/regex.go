@@ -1,9 +1,10 @@
 package rules
 
 import (
+	"regexp"
+
 	"github.com/dabao-zhao/validation"
 	"github.com/dabao-zhao/validation/util"
-	"regexp"
 )
 
 var (

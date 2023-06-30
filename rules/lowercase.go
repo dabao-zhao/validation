@@ -2,10 +2,11 @@ package rules
 
 import (
 	"errors"
-	"github.com/dabao-zhao/validation"
-	"github.com/dabao-zhao/validation/util"
 	"reflect"
 	"regexp"
+
+	"github.com/dabao-zhao/validation"
+	"github.com/dabao-zhao/validation/util"
 )
 
 var (

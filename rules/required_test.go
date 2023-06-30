@@ -1,10 +1,10 @@
 package rules
 
 import (
-	"github.com/dabao-zhao/validation"
 	"testing"
 	"time"
 
+	"github.com/dabao-zhao/validation"
 	"github.com/stretchr/testify/assert"
 )
 

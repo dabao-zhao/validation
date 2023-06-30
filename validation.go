@@ -49,11 +49,6 @@ type (
 	}
 )
 
-var (
-	validatableType            = reflect.TypeOf((*Validatable)(nil)).Elem()
-	validatableWithContextType = reflect.TypeOf((*ValidatableWithContext)(nil)).Elem()
-)
-
 func Make(val interface{}, fieldRules ...*FieldRules) *Validation {
 	return &Validation{
 		fieldTag:           "json",

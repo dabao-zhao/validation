@@ -2,9 +2,10 @@ package rules
 
 import (
 	"errors"
+	"unicode/utf8"
+
 	"github.com/dabao-zhao/validation"
 	"github.com/dabao-zhao/validation/util"
-	"unicode/utf8"
 )
 
 var (
